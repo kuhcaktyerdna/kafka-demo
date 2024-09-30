@@ -1,1 +1,14 @@
-spring.application.name=kafka-demo
+spring.application.name: kafka-demo
+
+spring.kafka:
+  consumer:
+    bootstrap-servers: localhost:9092
+    group-id: demoGroup
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  producer:
+    bootstrap-servers: localhost:9092
+    key-serializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-serializer: org.apache.kafka.common.serialization.StringDeserializer
