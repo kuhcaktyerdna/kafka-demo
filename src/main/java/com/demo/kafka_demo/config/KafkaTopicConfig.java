@@ -1,5 +1,6 @@
 package com.demo.kafka_demo.config;
 
+import com.demo.kafka_demo.model.TopicName;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,7 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic demoTopic() {
         return TopicBuilder
-                .name("demo")
+                .name(TopicName.DEMO)
                 .build();
     }
 
