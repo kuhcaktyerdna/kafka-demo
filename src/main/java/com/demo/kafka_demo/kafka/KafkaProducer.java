@@ -1,27 +1,18 @@
 package com.demo.kafka_demo.kafka;
 
-import com.demo.kafka_demo.model.TopicName;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
-@Slf4j
-@Component
-public class KafkaProducer {
+public interface KafkaProducer<T> {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    public KafkaProducer(final KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    KafkaTemplate<String, T> getKafkaTemplate();
 
-    public void send(final String message) {
-        send(TopicName.DEMO, message);
-    }
-
-    public void send(final String topic, final String message) {
-        log.info("Message produced: {} for topic {}", message, topic);
-        kafkaTemplate.send(topic, message);
+    default void send(final String topic, final T message) {
+        LOGGER.info("Message produced: {} for topic {}", message, topic);
+        getKafkaTemplate().send(topic, message);
     }
 
 }
