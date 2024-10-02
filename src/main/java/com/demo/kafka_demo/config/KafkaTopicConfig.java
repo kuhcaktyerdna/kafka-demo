@@ -16,4 +16,11 @@ public class KafkaTopicConfig {
                 .build();
     }
 
+    @Bean
+    public NewTopic demoObectsTopic() {
+        return TopicBuilder
+                .name(TopicName.DEMO_OBJECTS)
+                .build();
+    }
+
 }
