@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "com.demo.kafka_demo.model",
+  "name": "User",
+  "version": "1",
+  "fields": [
+    {
+      "name": "username",
+      "type": "string",
+      "doc": "username of user"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "doc": "password of user"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "email address of user"
+    }
+  ]
+}
