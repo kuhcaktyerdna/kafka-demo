@@ -2,8 +2,12 @@
   "type": "record",
   "namespace": "com.demo.kafka_demo.model",
   "name": "User",
-  "version": "1",
+  "version": "2",
   "fields": [
+    {
+      "name": "uuid",
+      "type": "string"
+    },
     {
       "name": "username",
       "type": "string",
@@ -18,6 +22,10 @@
       "name": "email",
       "type": "string",
       "doc": "email address of user"
+    },
+    {
+      "name": "address",
+      "type": "com.demo.kafka_demo.model.Address"
     }
   ]
 }

@@ -1,0 +1,10 @@
+### Reset compatibility mode for schema registry
+PUT http://localhost:8081/config
+Content-Type: application/vnd.schemaregistry.v1+json
+
+{
+  "compatibility": "NONE"
+}
+
+###
+

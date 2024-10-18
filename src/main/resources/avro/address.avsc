@@ -1,0 +1,32 @@
+{
+  "type": "record",
+  "namespace": "com.demo.kafka_demo.model",
+  "name": "Address",
+  "version": "1",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": "string"
+    },
+    {
+      "name": "county",
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "type": "string"
+    },
+    {
+      "name": "addressLine1",
+      "type": "string"
+    },
+    {
+      "name": "addressLine2",
+      "type": "string"
+    },
+    {
+      "name": "zipCode",
+      "type": "int"
+    }
+  ]
+}

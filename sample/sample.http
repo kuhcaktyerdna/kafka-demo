@@ -6,8 +6,17 @@ POST http://localhost:8080/api/publish/object
 Content-Type: application/json
 
 {
+  "uuid": "c69aac07-2a90-4c80-86bd-d8e27614c482",
   "username": "test username",
   "password": "changeMe2024!",
-  "email": "test_user@testMail.com"
+  "email": "test_user@testMail.com",
+  "address": {
+    "uuid": "3d7e99b7-eb64-45b5-9d31-16de9a0c50da",
+    "addressLine1": "test street 1",
+    "addressLine2": "11 / 21",
+    "city": "New York",
+    "county": "US",
+    "zipCode": 111111
+  }
 }
 

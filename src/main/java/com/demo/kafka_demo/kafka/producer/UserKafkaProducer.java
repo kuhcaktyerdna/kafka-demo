@@ -5,9 +5,6 @@ import com.demo.kafka_demo.model.TopicName;
 import com.demo.kafka_demo.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,11 +24,6 @@ public class UserKafkaProducer implements KafkaProducer<User> {
 
     @Override
     public void send(final String topic, final User user) {
-        final Message<User> message = MessageBuilder
-                .withPayload(user)
-                .setHeader(KafkaHeaders.TOPIC, topic)
-                .build();
-
-        kafkaTemplate.send(message);
+        kafkaTemplate.send(topic, user.getUuid(), user);
     }
 }

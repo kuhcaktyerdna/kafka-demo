@@ -1,8 +1,10 @@
 spring.application.name: kafka-demo
+schema-registry.url: http://127.0.0.1:8081
+kafka.broker-url: localhost:9092
 
 spring.kafka:
   consumer:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${kafka.broker-url}
     group-id: demoGroup
     auto-offset-reset: earliest
     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -11,15 +13,16 @@ spring.kafka:
     value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
     properties:
       spring.json.trusted.packages: "*"
-      schema.registry.url: http://127.0.0.1:8081
+      schema.registry.url: ${schema-registry.url}
       specific.avro.reader: true
-
-
   producer:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${kafka.broker-url}
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #    value-serializer: org.apache.kafka.common.serialization.StringSerializer
 #    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     properties:
-      schema.registry.url: http://127.0.0.1:8081
+      schema.registry.url: ${schema-registry.url}
+  streams:
+    bootstrap-servers: "127.0.0.1:9092"
+    application-id: "kafka-demo-1"
