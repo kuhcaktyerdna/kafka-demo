@@ -21,7 +21,7 @@ public class UserKafkaProducer implements KafkaProducer<User> {
         return kafkaTemplate;
     }
 
-    public void send(User user) {
+    public void send(final User user) {
         send(TopicName.DEMO_OBJECTS, user);
     }
 

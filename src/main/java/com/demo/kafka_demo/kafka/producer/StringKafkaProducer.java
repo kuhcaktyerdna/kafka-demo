@@ -4,7 +4,6 @@ import com.demo.kafka_demo.kafka.KafkaProducer;
 import com.demo.kafka_demo.model.TopicName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 

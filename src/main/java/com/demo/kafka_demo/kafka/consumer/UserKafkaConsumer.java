@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserKafkaConsumer implements KafkaConsumer<User> {
 
-    @KafkaListener(topics = TopicName.DEMO_OBJECTS, groupId = "demoGroup")
+    @KafkaListener(topics = TopicName.DEMO_OBJECTS, groupId = "${spring.kafka.consumer.group-id}")
     @Override
-    public void consume(User message) {
-        log.info("Consumed message: {}", message);
+    public void consume(final User user) {
+        log.info("Consumed user: {}", user);
     }
 
 }

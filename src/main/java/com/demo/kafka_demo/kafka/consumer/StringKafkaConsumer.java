@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StringKafkaConsumer implements KafkaConsumer<String> {
 
-    @KafkaListener(topics = TopicName.DEMO, groupId = "demoGroup")
+    @KafkaListener(topics = TopicName.DEMO, groupId = "${spring.kafka.consumer.group-id}")
     @Override
     public void consume(final String message) {
         log.info("Message received: {}", message);
