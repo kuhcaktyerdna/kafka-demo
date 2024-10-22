@@ -1,12 +1,11 @@
 package com.demo.kafka_demo.builder;
 
-import com.demo.kafka_demo.kafka.processor.UserAddressProcessor;
+import com.demo.kafka_demo.kafka.processor.api.UserAddressProcessor;
 import com.demo.kafka_demo.model.TopicName;
+import com.demo.kafka_demo.model.User;
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -30,10 +29,10 @@ public class KafkaTopologyBuilder {
 
     private final KafkaProperties kafkaProperties;
 
-    @PostConstruct
+//    @PostConstruct
     public void build() {
         final Topology topology = streamsBuilder.build();
-        try (final SpecificAvroSerde<SpecificRecord> avroSerde = new SpecificAvroSerde<>();
+        try (final SpecificAvroSerde<User> avroSerde = new SpecificAvroSerde<>();
              final Serde<String> stringSerde = Serdes.serdeFrom(String.class)) {
             avroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
 

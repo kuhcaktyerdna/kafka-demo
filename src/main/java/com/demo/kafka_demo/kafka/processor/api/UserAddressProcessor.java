@@ -1,4 +1,4 @@
-package com.demo.kafka_demo.kafka.processor;
+package com.demo.kafka_demo.kafka.processor.api;
 
 import com.demo.kafka_demo.model.Address;
 import com.demo.kafka_demo.model.User;
