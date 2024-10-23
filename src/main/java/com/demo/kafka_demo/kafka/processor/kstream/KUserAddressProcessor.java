@@ -35,7 +35,7 @@ public class KUserAddressProcessor {
         userAvroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
         addressAvroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
 
-        final KStream<String, User> source = streamBuilder.stream(TopicName.DEMO_OBJECTS, Consumed.with(Serdes.String(), userAvroSerde));
+        final KStream<String, User> source = streamBuilder.stream(TopicName.USER_TOPIC, Consumed.with(Serdes.String(), userAvroSerde));
         source.print(Printed.<String, User>toSysOut().withLabel(this.getClass().getSimpleName() + " source"));
 
         final KStream<String, Address> sink = source.mapValues((readOnlyKey, value) -> value.getAddress());

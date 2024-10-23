@@ -31,9 +31,10 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic demoObectsTopic() {
+    public NewTopic usersTopic() {
         return TopicBuilder
-                .name(TopicName.DEMO_OBJECTS)
+                .name(TopicName.USER_TOPIC)
+                .partitions(2)
                 .build();
     }
 
@@ -47,10 +48,10 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, HashMap<Object, Object>> kafkaListenerContainerFactoryHashMap() {
-        final ConcurrentKafkaListenerContainerFactory<String, HashMap<Object, Object>> factory =
+    public <K, V> ConcurrentKafkaListenerContainerFactory<String, HashMap<K, V>> kafkaListenerContainerFactoryHashMap() {
+        final ConcurrentKafkaListenerContainerFactory<String, HashMap<K, V>> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        final ConsumerFactory<String, HashMap<Object, Object>> consumerFactory =
+        final ConsumerFactory<String, HashMap<K, V>> consumerFactory =
                 generateFactory(new StringDeserializer(), new JsonDeserializer<>(HashMap.class, false));
         factory.setConsumerFactory(consumerFactory);
         return factory;
@@ -58,7 +59,7 @@ public class KafkaConfig {
 
     private <K, V> ConsumerFactory<K, V> generateFactory(final Deserializer<K> keyDeserializer,
                                                          final Deserializer<V> valueDeserializer) {
-        Map<String, Object> props = new HashMap<>();
+        final Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         return new DefaultKafkaConsumerFactory<>(props, keyDeserializer, valueDeserializer);

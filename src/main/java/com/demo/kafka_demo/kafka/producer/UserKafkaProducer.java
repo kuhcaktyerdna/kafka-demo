@@ -19,7 +19,7 @@ public class UserKafkaProducer implements KafkaProducer<User> {
     }
 
     public void send(final User user) {
-        send(TopicName.DEMO_OBJECTS, user);
+        send(TopicName.USER_TOPIC, user);
     }
 
     @Override

@@ -33,10 +33,10 @@ public class KUserCityAggregateProcessor {
         final SpecificAvroSerde<User> userAvroSerde = new SpecificAvroSerde<>();
         userAvroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
 
-        final KStream<String, User> source = streamBuilder.stream(TopicName.DEMO_OBJECTS, Consumed.with(Serdes.String(), userAvroSerde));
+        final KStream<String, User> source = streamBuilder.stream(TopicName.USER_TOPIC, Consumed.with(Serdes.String(), userAvroSerde));
         source.print(Printed.<String, User>toSysOut().withLabel(this.getClass().getSimpleName() + " source"));
 
-        Serde<HashMap<Object, Object>> grouppedCitiesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(HashMap.class));
+        final Serde<HashMap<String, Integer>> grouppedCitiesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(HashMap.class));
         source
                 .groupByKey(Grouped.with(Serdes.String(), userAvroSerde))
 //                .windowedBy(SessionWindows.ofInactivityGapAndGrace(Duration.ofSeconds(10), Duration.ofSeconds(5)))

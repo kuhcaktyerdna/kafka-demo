@@ -10,11 +10,11 @@ import java.util.HashMap;
 
 @Slf4j
 @Component
-public class CityAggregateConsumer implements KafkaConsumer<HashMap<Object, Object>> {
+public class CityAggregateConsumer implements KafkaConsumer<HashMap<String, Integer>> {
 
     @KafkaListener(topics = TopicName.CITY_TOPIC, groupId = "${spring.kafka.consumer.group-id}", containerFactory = "kafkaListenerContainerFactoryHashMap")
     @Override
-    public void consume(HashMap<Object, Object> message) {
+    public void consume(HashMap<String, Integer> message) {
         log.info("Consumed city aggregation: {}", message);
     }
 

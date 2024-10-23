@@ -37,7 +37,7 @@ public class KafkaTopologyBuilder {
             avroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
 
             final String sourceName = "SOURCE";
-            topology.addSource(sourceName, stringSerde.deserializer(), avroSerde.deserializer(), TopicName.DEMO_OBJECTS)
+            topology.addSource(sourceName, stringSerde.deserializer(), avroSerde.deserializer(), TopicName.USER_TOPIC)
                     .addProcessor(UserAddressProcessor.PROCESSOR_NAME, UserAddressProcessor::new, sourceName)
                     .addSink(UserAddressProcessor.SINK_NAME, TopicName.ADDRESS_TOPIC, stringSerde.serializer(), avroSerde.serializer(), UserAddressProcessor.PROCESSOR_NAME);
 

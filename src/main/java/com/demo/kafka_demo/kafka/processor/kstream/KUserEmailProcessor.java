@@ -31,7 +31,7 @@ public class KUserEmailProcessor {
         final SpecificAvroSerde<User> userAvroSerde = new SpecificAvroSerde<>();
         userAvroSerde.configure(Collections.singletonMap(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl), false);
 
-        final KStream<String, User> source = streamsBuilder.stream(TopicName.DEMO_OBJECTS, Consumed.with(Serdes.String(), userAvroSerde));
+        final KStream<String, User> source = streamsBuilder.stream(TopicName.USER_TOPIC, Consumed.with(Serdes.String(), userAvroSerde));
         source.print(Printed.<String, User>toSysOut().withLabel(this.getClass().getSimpleName() + " source"));
 
         final KStream<String, String> sink = source.mapValues((readOnlyKey, value) -> value.getEmail());
