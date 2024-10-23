@@ -8,9 +8,11 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
@@ -39,7 +41,6 @@ public class KUserCityAggregateProcessor {
         final Serde<HashMap<String, Integer>> grouppedCitiesSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(HashMap.class));
         source
                 .groupByKey(Grouped.with(Serdes.String(), userAvroSerde))
-//                .windowedBy(SessionWindows.ofInactivityGapAndGrace(Duration.ofSeconds(10), Duration.ofSeconds(5)))
                 .aggregate(HashMap::new,
                         (key, user, groupedMap) -> {
                             groupedMap.compute(
@@ -47,7 +48,10 @@ public class KUserCityAggregateProcessor {
                                     (k, v) -> v == null ? 1 : Integer.parseInt(v.toString()) + 1
                             );
                             return groupedMap;
-                        }, Materialized.with(Serdes.String(), grouppedCitiesSerde))
+                        }, Materialized
+                                .<String, HashMap<String, Integer>, KeyValueStore<Bytes, byte[]>>as("groupedCities")
+                                .withKeySerde(Serdes.String())
+                                .withValueSerde(grouppedCitiesSerde))
                 .toStream()
                 .map(KeyValue::new)
                 .to(TopicName.CITY_TOPIC, Produced.with(Serdes.String(), grouppedCitiesSerde));
